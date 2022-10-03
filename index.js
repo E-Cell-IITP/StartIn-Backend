@@ -39,5 +39,5 @@ app.use('/users', require('./routes/users.routes'));
 app.use(errors.errorHandlers);
 
 app.listen(process.env.port || 4000, function () {
-    console.log('Server is listening on port 3000');
+    console.log('Server is listening on port 4000');
 });

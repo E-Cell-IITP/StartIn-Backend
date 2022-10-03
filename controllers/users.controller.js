@@ -1,15 +1,15 @@
-const bcryptsjs = require('bcryptjs');
-const userSerrvices = require('../services/users.services');
+const bcryptjs = require('bcryptjs');
+const userService = require('../services/users.services');
 
 exports.register = (req, res, next) => {
     const { password } = req.body;
-    const salt = bcryptsjs.genSaltSync(10);
+    const salt = bcryptsjs.genSalt(10);
 
-    req.body.password = bcryptsjs.hashSync(password, salt);
+    req.body.password = bcryptjs.hashSync(password, salt);
 
-    userSerrvices.register(req.body, (err, user) => {
-        if (err) {
-            return next(err);
+    userService.register(req.body, (error, result) => {
+        if (error) {
+            return next(error);
             
         }
         return res.status(200).send({
@@ -22,9 +22,9 @@ exports.register = (req, res, next) => {
 exports.login = (req, res, next) => {
     const { username, password } = req.body;
 
-    userSerrvices.login({username, password }, (err, result) => {
-        if (err) {
-            return next(err);
+    userService.login({username, password }, (error, result) => {
+        if (error) {
+            return next(error);
         }
         return res.status(200).send({
             message: 'User logged in successfully',
