@@ -16,11 +16,6 @@ async function login({ username, password }, callback) {
         })
     }
     }
-    else {
-        return callback ({
-            message: 'Invalid username or password',
-        })
-    }
 }
 
 async function register(params, callback) {

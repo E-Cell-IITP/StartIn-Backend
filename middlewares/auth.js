@@ -13,9 +13,9 @@ function authenticateToken (req, res, next) {
     });
 }
 
-function generateAccessToken(user) {
-    return jwt.sign(user, "StartIn_Secret_key", { 
-        expiresIn: '3h' 
+function generateAccessToken(username) {
+    return jwt.sign({data: username}, "StartIn_Secret_key", { 
+        expiresIn: "3h", 
     });
 }
 

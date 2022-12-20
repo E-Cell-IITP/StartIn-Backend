@@ -11,8 +11,8 @@ const app = express();
 
 mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useNewUrlParser: true,
+    // useUnifiedTopology: true,
 }).then(
     () => {
         console.log('Successfully connected to the database');
@@ -36,7 +36,7 @@ app.use(express.json());
 
 app.use('/users', require('./routes/users.routes'));
 
-app.use(errors.errorHandlers);
+app.use(errors.errorHandler);
 
 app.listen(process.env.port || 4000, function () {
     console.log('Server is listening on port 4000');
