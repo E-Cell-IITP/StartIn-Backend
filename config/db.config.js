@@ -1,3 +1,6 @@
-module.exports = {
-    db: 'mongodb://localhost/StartIn-app',
-};
+const dotenv = require('dotenv');
+dotenv.config();
+
+module.exports={
+    db: process.env.MONGODB_URI
+}

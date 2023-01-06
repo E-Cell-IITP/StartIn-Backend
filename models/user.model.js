@@ -14,12 +14,17 @@ const userSchema = new Schema({
     Email: {
         type: String,
         required: true,
-        unique: true,
     },
     username: {
         type: String,
         required: true,
+        unique: true,
     },
+    phone : {
+        type: Number,
+        required: true,
+    },
+
     password: {
         type: String,
         required: true,
@@ -39,7 +44,7 @@ userSchema.set('toJSON', {
     },
 });
 
-userSchema.plugin(uniqueValidator, {message: 'Email already in use.'});
+userSchema.plugin(uniqueValidator, {message: 'Username already in use.'});
 
 const User = mongoose.model('User', userSchema);
 

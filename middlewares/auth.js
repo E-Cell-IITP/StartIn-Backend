@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const User = require('../models/user.model');
 
 function authenticateToken (req, res, next) {
     const authHeader = req.headers['authorization'];
@@ -6,7 +7,7 @@ function authenticateToken (req, res, next) {
 
     if (token == null) return res.sendStatus(401);
 
-    jwt.verify(token, "StartIn_Secret_key", (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
         req.user = user;
         next();
@@ -14,8 +15,8 @@ function authenticateToken (req, res, next) {
 }
 
 function generateAccessToken(username) {
-    return jwt.sign({data: username}, "StartIn_Secret_key", { 
-        expiresIn: "3h", 
+    return jwt.sign({data: username}, process.env.JWT_SECRET, { 
+        expiresIn: "20h", 
     });
 }
 

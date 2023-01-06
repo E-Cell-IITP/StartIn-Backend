@@ -28,6 +28,9 @@ app.use(
         path: [
             { url: '/users/login', methods: ['POST'] }, // Login
             { url: '/users/register', methods: ['POST'] }, // Register
+            { url: '/users/create-user-profit', methods: ['POST'] }, // Create user profit
+            { url: '/users/team-register', methods: ['POST'] }, // Team register
+            { url: '/users/find-user-in-team', methods: ['GET'] }, // Find user in team
         ],
     })
 );
