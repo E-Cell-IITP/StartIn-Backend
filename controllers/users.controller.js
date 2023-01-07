@@ -4,6 +4,7 @@ const userService = require('../services/users.services');
 //user register
 exports.register = (req, res, next) => {
     const { password } = req.body;
+    console.log(req.body);
     const salt = bcryptjs.genSaltSync(10);
 
     req.body.password = bcryptjs.hashSync(password, salt);

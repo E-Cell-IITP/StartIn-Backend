@@ -23,11 +23,19 @@ mongoose.connect(dbConfig.db, {
 );
 
 auth.authenticateToken.unless = unless;
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+
 app.use(
     auth.authenticateToken.unless({
         path: [
             { url: '/users/login', methods: ['POST'] }, // Login
-            { url: '/users/register', methods: ['POST'] }, // Register
+            { url: '/users/register', methods: ['POST','GET','OPTIONS'] }, // Register
             { url: '/users/create-user-profit', methods: ['POST'] }, // Create user profit
             { url: '/users/team-register', methods: ['POST'] }, // Team register
             { url: '/users/find-user-in-team', methods: ['GET'] }, // Find user in team
@@ -36,6 +44,8 @@ app.use(
 );
 
 app.use(express.json());
+
+
 
 app.use('/users', require('./routes/users.routes'));
 
