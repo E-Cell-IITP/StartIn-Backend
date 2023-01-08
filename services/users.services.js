@@ -8,19 +8,18 @@ const auth = require('../middlewares/auth.js');
 async function login({ username, password }, callback) {
     const user = await User.findOne({ username });
 
-    if( user !=null) {
+    if(user) {
         if(bcryptjs.compareSync(password, user.password)) {
             const token = auth.generateAccessToken(username);
             return callback(null, {...user.toJSON(), token});
     }
+    }
     else {
         return callback ({
             message: 'Invalid username or password',
-        })
-    }
+        })   
     }
 }
-
 
 //user register
 async function register(params, callback) {
