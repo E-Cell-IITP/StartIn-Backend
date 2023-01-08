@@ -35,9 +35,22 @@ exports.login = (req, res, next) => {
             message: 'User logged in successfully',
             data: result,
         });
-        req.session.username= username;
     });
 };
+
+//logout
+exports.logout = (req, res, next) => {
+    userService.logout(req.body, (error, result) => {
+        if (error) {
+            return next(error);
+        }
+        return res.status(200).send({
+            message: 'User logged out successfully',
+            data: result,
+        });
+    });
+};
+
 
 //userProfile
 exports.userProfile = (req, res, next) => {

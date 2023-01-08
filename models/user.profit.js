@@ -11,7 +11,7 @@ const userProfitSchema = new Schema({
         default: Date.now(),
     },
     user: {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         required: true,
     },

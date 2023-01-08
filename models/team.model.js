@@ -16,6 +16,34 @@ const TeamSchema = new Schema({
         type: Array,
         required: true,
     },
+    category: {
+        type: String,
+        enum: ['Food', 'Services', 'Others'],
+    },
+    imageUrl: {
+        type: String,
+    },
+
+    Profit: [{
+        user: {
+            type: String,
+            ref: 'User',
+            required: true,
+        },
+        amount: {
+            type: Number,
+            required: true,
+            default: 0,
+        },
+        date: {
+            type: Date,
+            default: Date.now(),
+        },
+        remarks: {
+            type: String,
+        },
+    }
+    ]
 
 });
 

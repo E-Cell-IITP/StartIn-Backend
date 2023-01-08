@@ -33,6 +33,10 @@ const userSchema = new Schema({
         type: Date,
         default: Date.now(),
     },
+    teamName: {
+        type: String,
+        default: null,
+    },
 });
 
 userSchema.set('toJSON', {
