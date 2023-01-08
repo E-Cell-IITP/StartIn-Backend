@@ -1,9 +1,11 @@
 const bcryptjs = require('bcryptjs');
 const userService = require('../services/users.services');
+const mailer = require('../services/email');
 
 //user register
 exports.register = (req, res, next) => {
     const { password } = req.body;
+    console.log(req.body);
     const salt = bcryptjs.genSaltSync(10);
 
     req.body.password = bcryptjs.hashSync(password, salt);
@@ -11,8 +13,9 @@ exports.register = (req, res, next) => {
     userService.register(req.body, (error, result) => {
         if (error) {
             return next(error);
-            
         }
+        var mail = {email: req.body.Email, username: req.body.username, password: password }
+        mailer.mailer(mail);
         return res.status(200).send({
             message: 'User registered successfully',
             data: result,            
