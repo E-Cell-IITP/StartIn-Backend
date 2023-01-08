@@ -9,6 +9,8 @@ const {unless} = require("express-unless");
 
 const app = express();
 
+const cookieParser = require('cookie-parser');
+
 mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.db, {
     // useNewUrlParser: true,
@@ -37,6 +39,7 @@ app.use(
         path: [
             { url: '/users/login', methods: ['POST'] }, // Login
             { url: '/users/register', methods: ['POST'] }, // Register
+            { url: '/users/logout', methods: ['GET'] }, // Logout
             { url: '/users/create-user-profit', methods: ['POST'] }, // Create user profit
             { url: '/users/team-register', methods: ['POST'] }, // Team register
             { url: '/users/find-user-in-team', methods: ['GET'] }, // Find user in team
@@ -45,6 +48,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/users', require('./routes/users.routes'));
 
