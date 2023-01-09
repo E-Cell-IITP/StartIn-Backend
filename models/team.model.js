@@ -49,4 +49,6 @@ const TeamSchema = new Schema({
 
 TeamSchema.plugin(uniqueValidator, {message: 'Team name already in use.'});
 
-module.exports = mongoose.model('Team', TeamSchema);
+
+const Team = mongoose.model('Team', TeamSchema);
+module.exports = Team;
