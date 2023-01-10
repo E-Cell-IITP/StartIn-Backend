@@ -12,5 +12,6 @@ router.post('/create-user-profit', userController.createUserProfit);
 router.post('/team-register', userController.teamRegister);
 router.post('/payment-detail', userController.paymentDetail);
 router.get('/find-user-in-team', userController.findUserInTeam);
+router.post('/get-team-from-token', userController.getTeamFromToken);
 
 module.exports = router;

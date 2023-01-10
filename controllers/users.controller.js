@@ -108,3 +108,14 @@ exports.paymentDetail = (req, res, next) => {
     });
 }
 
+exports.getTeamFromToken = (req, res, next) => {
+    userService.getTeamFromToken(req.body, (error, result) => {
+        if (error) {
+            return next(error);
+        }
+        return res.status(200).send({
+            message: 'Team fetched successfully',
+            data: result,
+        });
+    });
+}

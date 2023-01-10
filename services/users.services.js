@@ -179,6 +179,37 @@ async function paymentDetail(params, callback) {
     }
 }
 
+async function getTeamFromToken(params, callback) {
+    const result = await Token.findOne({token : params.token})
+    console.log(result);
+    if(result)
+    {
+        const user = await User.findOne({_id : result.userId});
+        console.log(user);
+        if(user)
+        {
+            const team = await Team.findOne({teamName : user.teamName});
+            console.log(team);
+            if(team)
+            {
+                return callback(null, team);
+            }
+            else
+            {
+                return callback("Team not found");
+            }
+        }
+        else
+        {
+            return callback("User not found");
+        }
+    }
+    else
+    {
+        return callback("Token not found");
+    }
+}
+
 
 module.exports = {
     login,
@@ -186,6 +217,7 @@ module.exports = {
     createUserProfit,
     teamRegister,
     findUserInTeam,
-    paymentDetail
+    paymentDetail,
+    getTeamFromToken
     // forgetPassword,
 };
