@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 const UserProfit = require('../models/user.profit');
 const Team = require('../models/team.model');
+const Token = require('../models/token');
 const bcryptjs = require('bcryptjs');
 const auth = require('../middlewares/auth.js');
 
@@ -11,7 +12,20 @@ async function login({ username, password }, callback) {
     if (user!=null) {
         if (bcryptjs.compareSync(password, user.password)) {
             const token = auth.generateAccessToken(username);
+            console.log(user._id);
+            console.log(token);
+            const n_token = new Token({userId : user._id, token : token});
+            n_token.save()
+            .then(result => {
+                console.log(result);
+            })
+            .catch(err => console.log(err))
             return callback(null, { ...user.toJSON(), token });
+        }
+        else {
+            return callback({
+                message: 'Invalid username or password',
+            })
         }
     }
     else {
@@ -116,6 +130,55 @@ async function findUserInTeam(params, callback) {
     }
 }
 
+async function paymentDetail(params, callback) {
+    // Token.findOne({token : params.token})
+    // .then(result=>{
+    //     console.log(result)
+    //     return User.findOne({_id : result.userId})
+    // }
+    // )
+    // .then(user=>{
+    //     return Team.UpdateOne({teamName : user.teamName},{$set : {imageUrl : params.link}});
+    // })
+    // .catch()
+    // console.log(params);
+    const result = await Token.findOne({token : params.token})
+    console.log(result);
+    if(result)
+    {
+        const user = await User.findOne({_id : result.userId});
+        console.log(user);
+        if(user)
+        {
+            const team = await Team.findOne({teamName : user.teamName});
+            console.log(team);
+            if(team)
+            {
+                team.imageUrl = params.link;
+                team.save()
+                .then((response) => {
+                    return callback(null, response);
+                })
+                .catch((error) => {
+                    return callback(error);
+                });
+            }
+            else
+            {
+                return callback("Team not found");
+            }
+        }
+        else
+        {
+            return callback("User not found");
+        }
+    }
+    else
+    {
+        return callback("Token not found");
+    }
+}
+
 
 module.exports = {
     login,
@@ -123,5 +186,6 @@ module.exports = {
     createUserProfit,
     teamRegister,
     findUserInTeam,
+    paymentDetail
     // forgetPassword,
 };

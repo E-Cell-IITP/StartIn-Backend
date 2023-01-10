@@ -51,6 +51,7 @@ app.use(
             { url: '/users/create-user-profit', methods: ['POST'] }, // Create user profit
             { url: '/users/team-register', methods: ['POST'] }, // Team register
             { url: '/users/find-user-in-team', methods: ['GET'] }, // Find user in team
+            { url: '/users/payment-detail', methods: ['POST']}
         ],
     })
 );

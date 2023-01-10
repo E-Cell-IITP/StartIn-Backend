@@ -96,3 +96,15 @@ exports.findUserInTeam = (req, res, next) => {
     });
 }
 
+exports.paymentDetail = (req, res, next) => {
+    userService.paymentDetail(req.body, (error, result) => {
+        if (error) {
+            return next(error);
+        }
+        return res.status(200).send({
+            message: 'Payment details added successfully',
+            data: result,
+        });
+    });
+}
+
